@@ -1,12 +1,15 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:musicly_app/data/model/songs.dart';
 
 class AudioFile extends StatefulWidget {
+  final Songs song;
   final AudioPlayer advancedPlayer;
 
   const AudioFile({
     super.key,
     required this.advancedPlayer,
+    required this.song,
   });
 
   @override
@@ -14,10 +17,8 @@ class AudioFile extends StatefulWidget {
 }
 
 class _AudioFileState extends State<AudioFile> {
-  Duration _duration = Duration();
-  Duration _position = Duration();
-  final String urlPath =
-      "https://st.bslmeiyu.com/uploads/%e6%9c%97%e6%96%87%e5%9b%bd%e9%99%85SBS%e7%b3%bb%e5%88%97/%e6%9c%97%e6%96%87%e5%9b%bd%e9%99%85%e8%8b%b1%e8%af%ad%e6%95%99%e7%a8%8b%e7%ac%ac1%e5%86%8c_V2/%e5%ad%a6%e7%94%9f%e7%94%a8%e4%b9%a6/P149_Chapter%2016_Vocabulary%20Preview.mp3";
+  Duration _duration = const Duration();
+  Duration _position = const Duration();
 
   bool isPlaying = false;
   bool isPaused = false;
@@ -26,7 +27,7 @@ class _AudioFileState extends State<AudioFile> {
 
   Color color = Colors.black;
 
-  List<IconData> _icons = [
+  final List<IconData> _icons = [
     Icons.play_circle_fill_rounded,
     Icons.pause_circle_filled_rounded,
   ];
@@ -41,11 +42,11 @@ class _AudioFileState extends State<AudioFile> {
       setState(() => _position = position);
     });
 
-    widget.advancedPlayer.setSourceUrl(urlPath);
+    widget.advancedPlayer.setSourceUrl(widget.song.audio ?? '');
 
     widget.advancedPlayer.onPlayerComplete.listen((event) {
       setState(() {
-        _position = Duration(seconds: 0);
+        _position = const Duration(seconds: 0);
         if (isRepeat == true) {
           isPlaying = true;
         } else {
@@ -58,29 +59,27 @@ class _AudioFileState extends State<AudioFile> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  _position.toString().split('.')[0],
-                  style: TextStyle(fontSize: 16),
-                ),
-                Text(
-                  _duration.toString().split('.')[0],
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                _position.toString().split('.')[0],
+                style: const TextStyle(fontSize: 16),
+              ),
+              Text(
+                _duration.toString().split('.')[0],
+                style: const TextStyle(fontSize: 16),
+              ),
+            ],
           ),
-          audioSlider(),
-          loadAsset(),
-        ],
-      ),
+        ),
+        audioSlider(),
+        loadAsset(),
+      ],
     );
   }
 
@@ -89,7 +88,7 @@ class _AudioFileState extends State<AudioFile> {
       iconSize: 50,
       onPressed: () {
         if (isPlaying == false) {
-          widget.advancedPlayer.play(UrlSource(urlPath));
+          widget.advancedPlayer.play(AssetSource(widget.song.audio ?? ''));
           setState(() => isPlaying = true);
         } else if (isPlaying == true) {
           widget.advancedPlayer.pause();

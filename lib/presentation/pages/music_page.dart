@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:musicly_app/data/model/songs.dart';
 import 'package:musicly_app/presentation/widgets/audio_file.dart';
 
 class MusicPage extends StatefulWidget {
-  const MusicPage({Key? key}) : super(key: key);
+  final Songs song;
+  const MusicPage({Key? key, required this.song}) : super(key: key);
 
   @override
   _MusicPageState createState() => _MusicPageState();
@@ -48,7 +50,10 @@ class _MusicPageState extends State<MusicPage> {
             backgroundColor: Colors.transparent,
             surfaceTintColor: Colors.transparent,
             leading: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                advancedPlayer.stop();
+                Navigator.pop(context);
+              },
               icon: const Icon(
                 CupertinoIcons.chevron_back,
                 color: Colors.white,
@@ -80,7 +85,7 @@ class _MusicPageState extends State<MusicPage> {
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.shade200,
-                  offset: Offset(0, 10),
+                  offset: const Offset(0, 10),
                   blurRadius: 8,
                 )
               ],
@@ -89,19 +94,22 @@ class _MusicPageState extends State<MusicPage> {
               children: [
                 SizedBox(height: screenHeight * 0.1),
                 Text(
-                  'Audio Name',
-                  style: TextStyle(
+                  widget.song.title ?? '',
+                  style: const TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 Text(
-                  'Martin Garrix',
-                  style: TextStyle(
+                  widget.song.artist ?? '',
+                  style: const TextStyle(
                     fontSize: 18,
                   ),
                 ),
-                AudioFile(advancedPlayer: advancedPlayer)
+                AudioFile(
+                  advancedPlayer: advancedPlayer,
+                  song: widget.song,
+                )
               ],
             ),
           ),
@@ -119,55 +127,8 @@ class _MusicPageState extends State<MusicPage> {
             ),
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Placeholder(),
+              child: Image.network(widget.song.image ?? ''),
             ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget buildHeader(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      height: 150,
-      color: Colors.lightBlue,
-      child: Row(
-        children: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              CupertinoIcons.chevron_back,
-              color: Colors.white,
-            ),
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  CupertinoIcons.search,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget buildAudioPlayer(BuildContext context) {
-    return Stack(
-      children: [
-        buildHeader(context),
-        Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              Text('Audio Name'),
-            ],
           ),
         )
       ],

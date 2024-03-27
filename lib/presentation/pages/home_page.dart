@@ -2,6 +2,7 @@ import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:musicly_app/presentation/pages/music_page.dart';
 import 'package:musicly_app/presentation/widgets/popular_song_card.dart';
 import 'package:musicly_app/data/model/songs.dart' as Songs;
 
@@ -84,7 +85,17 @@ class _HomePageState extends State<HomePage> {
         separatorBuilder: (context, _) => const SizedBox(width: 16),
         itemBuilder: (context, index) {
           final song = Songs.popularSongs[index];
-          return PopularSongCard(song: song);
+          return PopularSongCard(
+            song: song,
+            onSongClick: (song) {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => MusicPage(song: song),
+                ),
+              );
+            },
+          );
         },
       ),
     );
@@ -115,7 +126,14 @@ class _HomePageState extends State<HomePage> {
       itemBuilder: (context, index) {
         final song = Songs.recommendedSongs[index];
         return ListTile(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => MusicPage(song: song),
+              ),
+            );
+          },
           leading: ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.network(song.image ?? ''),

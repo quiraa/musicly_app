@@ -3,6 +3,7 @@ import 'package:musicly_app/data/model/songs.dart';
 
 class SongCard extends StatelessWidget {
   final Songs song;
+
   const SongCard({
     Key? key,
     required this.song,
@@ -10,6 +11,8 @@ class SongCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      decoration: BoxDecoration(),
+    );
   }
 }
