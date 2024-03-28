@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:musicly_app/presentation/pages/home_page.dart';
+import 'package:musicly_app/interface/pages/home_page.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
       title: 'Musicly',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        fontFamily: 'Nunito',
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
       ),
       home: const HomePage(),

@@ -174,7 +174,7 @@ class _AudioFileState extends State<AudioFile> {
 
   Widget audioSlider() {
     return Slider(
-      activeColor: Colors.red,
+      activeColor: Colors.blueAccent,
       inactiveColor: Colors.grey,
       value: _position.inSeconds.toDouble(),
       min: 0.0,

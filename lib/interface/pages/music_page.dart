@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:musicly_app/data/model/songs.dart';
-import 'package:musicly_app/presentation/widgets/audio_file.dart';
+import 'package:musicly_app/interface/widgets/audio_file.dart';
 
 class MusicPage extends StatefulWidget {
   final Songs song;
@@ -39,7 +39,7 @@ class _MusicPageState extends State<MusicPage> {
           left: 0,
           height: screenHeight / 2,
           child: Container(
-            color: Colors.lightBlue,
+            color: Colors.blueAccent.shade700,
           ),
         ),
         Positioned(
@@ -126,8 +126,14 @@ class _MusicPageState extends State<MusicPage> {
               color: Colors.grey.shade200,
             ),
             child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Image.network(widget.song.image ?? ''),
+              padding: const EdgeInsets.all(16),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Hero(
+                  tag: widget.song.title ?? '',
+                  child: Image.network(widget.song.image ?? ''),
+                ),
+              ),
             ),
           ),
         )

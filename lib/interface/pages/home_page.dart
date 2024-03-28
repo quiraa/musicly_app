@@ -2,8 +2,8 @@ import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:musicly_app/presentation/pages/music_page.dart';
-import 'package:musicly_app/presentation/widgets/popular_song_card.dart';
+import 'package:musicly_app/interface/pages/music_page.dart';
+import 'package:musicly_app/interface/widgets/popular_song_card.dart';
 import 'package:musicly_app/data/model/songs.dart' as Songs;
 
 class HomePage extends StatefulWidget {
@@ -28,10 +28,6 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.transparent,
       automaticallyImplyLeading: false,
-      leading: IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.dashboard_outlined),
-      ),
       actions: [
         IconButton(
           padding: const EdgeInsets.only(right: 8),
@@ -136,7 +132,10 @@ class _HomePageState extends State<HomePage> {
           },
           leading: ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Image.network(song.image ?? ''),
+            child: Hero(
+              tag: song.title ?? '',
+              child: Image.network(song.image ?? ''),
+            ),
           ),
           title: Text(
             song.title ?? '',

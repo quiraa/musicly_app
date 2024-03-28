@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/widgets.dart';
 import 'package:musicly_app/data/model/songs.dart';
 
 class PopularSongCard extends StatelessWidget {
@@ -25,15 +26,18 @@ class PopularSongCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           child: Stack(
             children: [
-              CachedNetworkImage(
-                width: double.maxFinite,
-                fit: BoxFit.cover,
-                imageUrl: song.image ?? '',
-                errorWidget: (context, url, error) => const Center(
-                  child: Icon(Icons.error_outline_rounded),
-                ),
-                placeholder: (context, url) => const Center(
-                  child: CupertinoActivityIndicator(),
+              Hero(
+                tag: song.title ?? '',
+                child: CachedNetworkImage(
+                  width: double.maxFinite,
+                  fit: BoxFit.cover,
+                  imageUrl: song.image ?? '',
+                  errorWidget: (context, url, error) => const Center(
+                    child: Icon(Icons.error_outline_rounded),
+                  ),
+                  placeholder: (context, url) => const Center(
+                    child: CupertinoActivityIndicator(),
+                  ),
                 ),
               ),
               Positioned(
@@ -48,7 +52,7 @@ class PopularSongCard extends StatelessWidget {
                       end: Alignment.bottomCenter,
                       colors: [
                         Colors.black12,
-                        Colors.black45,
+                        Colors.black87,
                       ],
                     ),
                   ),
